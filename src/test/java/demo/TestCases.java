@@ -1,6 +1,7 @@
 package demo;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -20,11 +21,14 @@ import demo.wrappers.Wrappers;
 
 public class TestCases {
     ChromeDriver driver;
+        Wrappers wrapper; 
 
     /*
      * TODO: Write your tests here with testng @Test annotation. 
      * Follow `testCase01` `testCase02`... format or what is provided in instructions
      */
+
+    
 
      
     /*
@@ -51,7 +55,53 @@ public class TestCases {
         driver = new ChromeDriver(options);
 
         driver.manage().window().maximize();
+        
     }
+
+    @Test
+    public void testCase01() throws InterruptedException {
+        System.out.println("Start Test Case : testCase01");
+        wrapper = new Wrappers(driver);
+        //open URL
+        wrapper.openUrl("https://www.flipkart.com/");
+        Thread.sleep(1000);
+        // locate search bar and send the values
+        wrapper.enterText(By.xpath("//input[@name='q']"), "Washing Machine"+ Keys.ENTER);
+        Thread.sleep(1000);
+        // select the popularity title
+        wrapper.selectPopularity(By.xpath("//div[@class='zg-M3Z']"));
+        Thread.sleep(1000);
+        // get rating count
+        wrapper.rating(By.xpath("//div[@class='XQDdHH']"));
+        System.out.println("End Test Case : testCase01");
+    }
+
+    @Test
+    public void testCase02() throws InterruptedException {
+        System.out.println("Start Test Case : testCase02");
+        wrapper = new Wrappers(driver);
+        Thread.sleep(1000);
+        // locate search bar and send the values
+        wrapper.enterText(By.xpath("//input[@name='q']"), "iPhone" + Keys.ENTER);
+        Thread.sleep(1000);
+        // call the method to print the discount percentage
+        wrapper.discount(By.xpath("//div[@class='yKfJKb row']"));
+        System.out.println("End Test Case: testCase02");
+    }
+
+    @Test
+    public void testCase03() throws InterruptedException {
+        System.out.println("Start Test Case: testCase03");
+        wrapper = new Wrappers(driver);
+        // locate search bar and send the values
+        wrapper.enterText(By.xpath("//input[@name='q']"), "Coffee Mug" + Keys.ENTER);
+        Thread.sleep(1000);
+        wrapper.clickRating(By.xpath("//div[@class='XqNaEv']/following-sibling::div"));
+        Thread.sleep(5000);
+        //call the method to print the title and image url of the product
+        wrapper.titleAndImageUrl(By.xpath("//div[contains(@class,'slAVV4')]"));
+    }
+    
 
     @AfterTest
     public void endTest()
